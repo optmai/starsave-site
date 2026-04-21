@@ -315,8 +315,9 @@
 </header>
 
 <div class="value-strip">
-  <p>Free Property Assessment</p>
-  <p>Small Flat Fee — Not 30%</p>
+  <p>Property Tax Appeal Report</p>
+  <p>First-Time User Free</p>
+  <p>Small Flat Fee — Not 25%–35%</p>
   <p>Texas Specialists</p>
   <p>Fast 24-Hour Response</p>
 </div>
@@ -325,7 +326,7 @@
   <!-- LEFT COPY -->
   <div class="copy">
     <h2>Is your property <em>over-appraised?</em><br>Get the evidence — and appeal it yourself.</h2>
-    <p>Most Texas tax appeal services charge <strong style="color:var(--rust)">30% of your savings</strong> and file on your behalf. We do it differently: we produce a professional comparable-market report that shows exactly what your property is worth, then you submit the appeal yourself — it's simple, and the county makes it easy. Our fee is a small flat rate, so <strong>you keep every dollar of your tax reduction.</strong></p>
+    <p>Most Texas tax appeal services charge <strong style="color:var(--rust)">25% to 35% of your savings</strong> and file on your behalf. We do it differently: we do the heavy lifting for you. Our <strong>data-driven Property Tax Appeal Report</strong> is built on rigorous local market research and professional analysis — giving you solid, credible evidence to present to the appraisal district. Paired with clear step-by-step filing instructions, it's everything you need to walk in with confidence. You submit it yourself; it's straightforward and takes minutes. Our fee is a small flat rate, so <strong>you keep every dollar of your tax reduction.</strong></p>
 
     <div class="steps">
       <div class="step">
@@ -338,15 +339,15 @@
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-text">
-          <strong>Receive your report & appeal package</strong>
-          <span>Within 24 hours we email you a market analysis plus step-by-step filing instructions.</span>
+          <strong>Receive your Property Tax Appeal Report</strong>
+          <span>Within 24 hours we email you your Property Tax Appeal Report with a market analysis and step-by-step filing instructions.</span>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-text">
           <strong>You file — and keep 100% of the savings</strong>
-          <span>We give you a ready-to-submit appeal package. You file it yourself in minutes. No 30% commission — just a small flat fee.</span>
+          <span>We give you a ready-to-submit appeal package. You file it yourself in minutes. No 25%–35% commission — just a small flat fee.</span>
         </div>
       </div>
     </div>
@@ -355,8 +356,8 @@
   <!-- FORM CARD -->
   <div class="form-card">
     <div id="form-section">
-      <h3>Get Your Free Report</h3>
-      <p class="sub">Enter your property info and we'll send your report & appeal instructions within 24 hours.</p>
+      <h3>Get Your Property Tax Appeal Report</h3>
+      <p class="sub">Enter your property info and we'll send your Property Tax Appeal Report and filing instructions within 24 hours.</p>
 
       <div class="field row2">
         <div>
@@ -385,7 +386,7 @@
       </div>
 
       <button class="btn" onclick="handleSubmit()">
-        <span class="star">★</span> Submit — Get My Free Report
+        <span class="star">★</span> Submit — Get My Appeal Report
       </button>
       <p class="privacy-note">🔒 Your information is private and never sold. Texas residents only.</p>
     </div>
@@ -396,7 +397,7 @@
       <h3>You're all set!</h3>
       <p>
         Thank you for submitting your property. We'll review your appraisal details and send a
-        <span class="hl">personalized report and appeal instructions</span>
+        <span class="hl">Property Tax Appeal Report and filing instructions</span>
         to your email within <span class="hl">24 hours</span>.
       </p>
       <p style="margin-top:14px;">Keep an eye on your inbox — and check your spam folder just in case.</p>
@@ -455,12 +456,12 @@
         const data = await response.json();
         alert(data?.errors?.[0]?.message || 'Submission failed. Please try again.');
         btn.disabled = false;
-        btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Free Report';
+        btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Appeal Report';
       }
     } catch (err) {
       alert('Network error. Please check your connection and try again.');
       btn.disabled = false;
-      btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Free Report';
+      btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Appeal Report';
     }
   }
 </script>
