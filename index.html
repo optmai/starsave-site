@@ -316,7 +316,7 @@
 
 <div class="value-strip">
   <p>Free Property Assessment</p>
-  <p>No Savings, No Fee</p>
+  <p>Small Flat Fee — Not 30%</p>
   <p>Texas Specialists</p>
   <p>Fast 24-Hour Response</p>
 </div>
@@ -324,8 +324,8 @@
 <main>
   <!-- LEFT COPY -->
   <div class="copy">
-    <h2>Is your property <em>over-appraised?</em><br>Let us fight to lower your tax bill.</h2>
-    <p>Texas property taxes are among the highest in the nation. Many homeowners are paying more than they should because their appraisal district overvalued their home. We analyze your property and guide you through the entire appeal process — at no upfront cost.</p>
+    <h2>Is your property <em>over-appraised?</em><br>Get the evidence — and appeal it yourself.</h2>
+    <p>Most Texas tax appeal services charge <strong style="color:var(--rust)">30% of your savings</strong> and file on your behalf. We do it differently: we produce a professional comparable-market report that shows exactly what your property is worth, then you submit the appeal yourself — it's simple, and the county makes it easy. Our fee is a small flat rate, so <strong>you keep every dollar of your tax reduction.</strong></p>
 
     <div class="steps">
       <div class="step">
@@ -338,15 +338,15 @@
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-text">
-          <strong>Receive your free report</strong>
-          <span>We email you a comparable-market analysis within 24 hours.</span>
+          <strong>Receive your report & appeal package</strong>
+          <span>Within 24 hours we email you a market analysis plus step-by-step filing instructions.</span>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-text">
-          <strong>We handle the appeal</strong>
-          <span>Our team files and negotiates on your behalf. You keep the savings.</span>
+          <strong>You file — and keep 100% of the savings</strong>
+          <span>We give you a ready-to-submit appeal package. You file it yourself in minutes. No 30% commission — just a small flat fee.</span>
         </div>
       </div>
     </div>
@@ -356,7 +356,7 @@
   <div class="form-card">
     <div id="form-section">
       <h3>Get Your Free Report</h3>
-      <p class="sub">Enter your property info and we'll be in touch within 24 hours.</p>
+      <p class="sub">Enter your property info and we'll send your report & appeal instructions within 24 hours.</p>
 
       <div class="field row2">
         <div>
@@ -410,12 +410,12 @@
 </footer>
 
 <script>
-  function handleSubmit() {
-    const streetNum   = document.getElementById('street_num').value.trim();
-    const streetName  = document.getElementById('street_name').value.trim();
-    const city        = document.getElementById('city').value.trim();
-    const appraisal   = document.getElementById('appraisal').value.trim();
-    const email       = document.getElementById('email').value.trim();
+  async function handleSubmit() {
+    const streetNum  = document.getElementById('street_num').value.trim();
+    const streetName = document.getElementById('street_name').value.trim();
+    const city       = document.getElementById('city').value.trim();
+    const appraisal  = document.getElementById('appraisal').value.trim();
+    const email      = document.getElementById('email').value.trim();
 
     if (!streetNum || !streetName || !city || !appraisal || !email) {
       alert('Please fill in all fields before submitting.');
@@ -431,9 +431,37 @@
       return;
     }
 
-    document.getElementById('form-section').style.display = 'none';
-    const box = document.getElementById('success-section');
-    box.style.display = 'block';
+    const btn = document.querySelector('.btn');
+    btn.disabled = true;
+    btn.innerHTML = 'Submitting…';
+
+    try {
+      const response = await fetch('https://formspree.io/f/mlgapbyl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          'House Number':    streetNum,
+          'Street Name':     streetName,
+          'City':            city,
+          'Appraisal Value': '$' + Number(appraisal).toLocaleString(),
+          'email':           email
+        })
+      });
+
+      if (response.ok) {
+        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('success-section').style.display = 'block';
+      } else {
+        const data = await response.json();
+        alert(data?.errors?.[0]?.message || 'Submission failed. Please try again.');
+        btn.disabled = false;
+        btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Free Report';
+      }
+    } catch (err) {
+      alert('Network error. Please check your connection and try again.');
+      btn.disabled = false;
+      btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Free Report';
+    }
   }
 </script>
 </body>
