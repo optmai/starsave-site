@@ -359,15 +359,9 @@
       <h3>Get Your Property Tax Appeal Report</h3>
       <p class="sub">Enter your property info and we'll send your Property Tax Appeal Report and filing instructions within 24 hours.</p>
 
-      <div class="field row2">
-        <div>
-          <label for="street_num">House Number</label>
-          <input type="text" id="street_num" placeholder="e.g. 4521" />
-        </div>
-        <div>
-          <label for="street_name">Street Name</label>
-          <input type="text" id="street_name" placeholder="e.g. Brazos Blvd" />
-        </div>
+      <div class="field">
+        <label for="street_full">Street Address</label>
+        <input type="text" id="street_full" placeholder="e.g. 4521 Brazos Blvd" />
       </div>
 
       <div class="field">
@@ -416,8 +410,7 @@
 
 <script>
   function resetForm() {
-    document.getElementById('street_num').value = '';
-    document.getElementById('street_name').value = '';
+    document.getElementById('street_full').value = '';
     document.getElementById('city').value = '';
     document.getElementById('appraisal').value = '';
     document.getElementById('email').value = '';
@@ -429,13 +422,12 @@
   }
 
   async function handleSubmit() {
-    const streetNum  = document.getElementById('street_num').value.trim();
-    const streetName = document.getElementById('street_name').value.trim();
+    const streetFull = document.getElementById('street_full').value.trim();
     const city       = document.getElementById('city').value.trim();
     const appraisal  = document.getElementById('appraisal').value.trim();
     const email      = document.getElementById('email').value.trim();
 
-    if (!streetNum || !streetName || !city || !appraisal || !email) {
+    if (!streetFull || !city || !appraisal || !email) {
       alert('Please fill in all fields before submitting.');
       return;
     }
@@ -458,8 +450,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          'House Number':    streetNum,
-          'Street Name':     streetName,
+          'Street Address':  streetFull,
           'City':            city,
           'Appraisal Value': '$' + Number(appraisal).toLocaleString(),
           'email':           email
