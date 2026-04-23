@@ -446,13 +446,13 @@
     btn.innerHTML = 'Submitting…';
 
     try {
-      const response = await fetch('https://formspree.io/f/mlgapbyl', {
+      const response = await fetch('http://143.198.179.19:8000/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          'Street Address':  streetFull,
-          'City':            city,
-          'Appraisal Value': '$' + Number(appraisal).toLocaleString(),
+          'street_address':  streetFull,
+          'city':            city,
+          'appraisal_value': Number(appraisal),
           'email':           email
         })
       });
