@@ -402,6 +402,9 @@
         to your email within <span class="hl">24 hours</span>.
       </p>
       <p style="margin-top:14px;">Keep an eye on your inbox — and check your spam folder just in case.</p>
+      <button class="btn" style="margin-top:24px;" onclick="resetForm()">
+        <span class="star">★</span> Submit Another Property
+      </button>
     </div>
   </div>
 </main>
@@ -412,6 +415,19 @@
 </footer>
 
 <script>
+  function resetForm() {
+    document.getElementById('street_num').value = '';
+    document.getElementById('street_name').value = '';
+    document.getElementById('city').value = '';
+    document.getElementById('appraisal').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('success-section').style.display = 'none';
+    document.getElementById('form-section').style.display = 'block';
+    const btn = document.querySelector('.btn');
+    btn.disabled = false;
+    btn.innerHTML = '<span class="star">★</span> Submit — Get My Appeal Report';
+  }
+
   async function handleSubmit() {
     const streetNum  = document.getElementById('street_num').value.trim();
     const streetName = document.getElementById('street_name').value.trim();
