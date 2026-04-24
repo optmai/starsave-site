@@ -319,7 +319,7 @@
   <p>Property Tax Appeal Report</p>
   <p>Small Flat Fee</p>
   <p>Texas Specialists</p>
-  <p>Fast 24-Hour Response</p>
+  <p>Fast 1-Hour Response</p>
 </div>
 
 <main>
@@ -340,7 +340,7 @@
         <div class="step-num">2</div>
         <div class="step-text">
           <strong>Receive your Property Tax Appeal Report</strong>
-          <span>Within 24 hours we email you your Property Tax Appeal Report with a market analysis and step-by-step filing instructions.</span>
+          <span>Within 1 hour we email you your Property Tax Appeal Report with a market analysis and step-by-step filing instructions.</span>
         </div>
       </div>
       <div class="step">
@@ -357,7 +357,7 @@
   <div class="form-card">
     <div id="form-section">
       <h3>Get Your Property Tax Appeal Report</h3>
-      <p class="sub">Enter your property info and we'll send your Property Tax Appeal Report and filing instructions within 24 hours.</p>
+      <p class="sub">Enter your property info and we'll send your Property Tax Appeal Report and filing instructions within 1 hour.</p>
 
       <div class="field">
         <label for="street_full">Street Address</label>
@@ -379,6 +379,10 @@
         <input type="email" id="email" placeholder="you@example.com" />
       </div>
 
+      <div class="field">
+        <label for="invite_code">Invitation Code</label>
+        <input type="text" id="invite_code" placeholder="Enter your invitation code" />
+      </div>
       <input type="text" name="_gotcha" style="display:none">
       <button class="btn" onclick="handleSubmit()">
         <span class="star">★</span> Submit — Get My Appeal Report
@@ -393,7 +397,7 @@
       <p>
         Thank you for submitting your property. We'll review your appraisal details and send a
         <span class="hl">Property Tax Appeal Report and filing instructions</span>
-        to your email within <span class="hl">24 hours</span>.
+        to your email within <span class="hl">1 hour</span>.
       </p>
       <p style="margin-top:14px;">📬 Keep an eye on your inbox — and <strong>please check your spam or junk folder</strong> as our email may be filtered. If you find it there, mark it as <strong>"Not Spam"</strong> to ensure future emails reach you directly.</p>
       <button class="btn" style="margin-top:24px;" onclick="resetForm()">
@@ -423,11 +427,16 @@
 
   async function handleSubmit() {
     const streetFull = document.getElementById('street_full').value.trim();
+    const inviteCode = document.getElementById('invite_code').value.trim();
+    if (inviteCode !== 'Texas2026') {
+      alert('Invalid invitation code. Please check your code and try again.');
+      return;
+    }
     const city       = document.getElementById('city').value.trim();
     const appraisal  = document.getElementById('appraisal').value.trim();
     const email      = document.getElementById('email').value.trim();
 
-    if (!streetFull || !city || !appraisal || !email) {
+    if (!streetFull || !city || !appraisal || !email || !inviteCode) {
       alert('Please fill in all fields before submitting.');
       return;
     }
@@ -451,6 +460,7 @@
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
           'street_address':  streetFull,
+          'invite_code':     inviteCode,
           'city':            city,
           'appraisal_value': Number(appraisal),
           'email':           email
@@ -458,6 +468,13 @@
       });
 
       if (response.ok) {
+        const data = await response.json();
+        if (data.error) {
+          alert(data.error);
+          btn.disabled = false;
+          btn.innerHTML = '<span class="star">★</span> Submit — Get My Appeal Report';
+          return;
+        }
         document.getElementById('form-section').style.display = 'none';
         document.getElementById('success-section').style.display = 'block';
       } else {
