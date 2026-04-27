@@ -584,7 +584,16 @@
   </div>
 </main>
 
-<footer>
+<!-- Legal Disclaimer Banner -->
+  <div style="background:#fdf8f0;border-top:2px solid #ddd4c2;padding:20px 32px;text-align:center;">
+    <p style="margin:0 auto;font-size:0.82rem;color:#6b7280;max-width:800px;line-height:1.7;">
+      <strong style="color:#1a2742;">⚖️ Legal Disclaimer:</strong> LoneStarTaxSave provides informational reports only and does not constitute legal or tax advice. We are not attorneys or licensed tax consultants. Results are estimates based on publicly available data and do not guarantee appeal outcomes. Users are solely responsible for filing their own protests. By using this service, you agree to our
+      <a href="#" onclick="document.getElementById('termsModal').style.display='flex';return false;" style="color:#b94c2a;font-weight:600;">Terms of Service</a> and
+      <a href="#" onclick="document.getElementById('privacyModal').style.display='flex';return false;" style="color:#b94c2a;font-weight:600;">Privacy Policy</a>.
+    </p>
+  </div>
+
+  <footer>
   <strong>LoneStarTaxSave.com</strong> &nbsp;·&nbsp; Helping Texas Homeowners Fight Unfair Property Taxes<br>
   <span style="margin-top:6px;display:inline-block">© 2026 LoneStarTaxSave. All rights reserved.</span>
 </footer>
@@ -738,5 +747,65 @@
 
     </div>
   </div>
+  <!-- Terms of Service Modal -->
+  <div id="termsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:2000;align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+    <div style="background:white;border-radius:14px;max-width:680px;width:92%;max-height:80vh;overflow-y:auto;padding:36px 32px;position:relative;">
+      <button onclick="document.getElementById('termsModal').style.display='none'" style="position:absolute;top:16px;right:20px;font-size:1.6rem;cursor:pointer;color:#6b7280;background:none;border:none;">&times;</button>
+      <h2 style="color:#1a2742;border-bottom:2px solid #c9933a;padding-bottom:12px;margin:0 0 20px;">Terms of Service</h2>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>1. Informational Purpose Only</strong><br>
+        LoneStarTaxSave provides property tax appeal reports for informational purposes only. Nothing on this website or in our reports constitutes legal, tax, or financial advice. We are not attorneys or licensed tax consultants.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>2. No Guarantee of Results</strong><br>
+        Our reports are estimates based on publicly available data from Brazos CAD. We make no representations or warranties regarding the accuracy of the data or the outcome of any property tax protest.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>3. User Responsibility</strong><br>
+        You are solely responsible for reviewing the report, filing your own protest, and any decisions made based on our service. LoneStarTaxSave is not liable for any losses or damages arising from the use of this service.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>4. Data Sources</strong><br>
+        All property data used in our analysis is sourced from publicly available records provided by the Brazos Central Appraisal District (Brazos CAD). We do not use or store any private or confidential information beyond your email address.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>5. Changes to Terms</strong><br>
+        We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of the updated terms.
+      </p>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:2000;align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+    <div style="background:white;border-radius:14px;max-width:680px;width:92%;max-height:80vh;overflow-y:auto;padding:36px 32px;position:relative;">
+      <button onclick="document.getElementById('privacyModal').style.display='none'" style="position:absolute;top:16px;right:20px;font-size:1.6rem;cursor:pointer;color:#6b7280;background:none;border:none;">&times;</button>
+      <h2 style="color:#1a2742;border-bottom:2px solid #c9933a;padding-bottom:12px;margin:0 0 20px;">Privacy Policy</h2>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>1. Information We Collect</strong><br>
+        We collect only the information you provide when submitting a request: your property address, appraisal value, and email address. We do not collect any other personal information.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>2. How We Use Your Information</strong><br>
+        Your email address is used solely to deliver your property tax appeal report. Your property address and appraisal value are used to generate the report. We do not sell, share, or rent your information to any third parties.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>3. Data Storage</strong><br>
+        Your submission data is stored securely on our servers and is used only for the purpose of generating and delivering your report. We retain records for internal quality assurance only.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>4. Third-Party Services</strong><br>
+        We use SendGrid to deliver email reports. Your email address is shared with SendGrid solely for this purpose. We also use publicly available data from Brazos CAD. No private data is shared with any other third parties.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>5. Your Rights</strong><br>
+        You may request deletion of your data at any time by contacting us at <a href="mailto:support@lonestartaxsave.com" style="color:#b94c2a;">support@lonestartaxsave.com</a>.
+      </p>
+      <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
+        <strong>6. Contact</strong><br>
+        For any privacy-related questions, please contact us at <a href="mailto:support@lonestartaxsave.com" style="color:#b94c2a;">support@lonestartaxsave.com</a>.
+      </p>
+    </div>
+  </div>
+
 </body>
 </html>
