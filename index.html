@@ -523,6 +523,11 @@
       </div>
 
       <div class="field">
+        <label for="prop_id">Property ID <span style="color:#6b7280;font-weight:400;font-size:0.85rem;">(Optional)</span></label>
+        <input type="text" id="prop_id" placeholder="e.g. 123456" />
+      </div>
+
+      <div class="field">
         <label for="city">City</label>
         <input type="text" id="city" placeholder="e.g. College Station" />
       </div>
@@ -580,6 +585,7 @@
   function resetForm() {
     document.getElementById('street_full').value = '';
     document.getElementById('city').value = '';
+    document.getElementById('prop_id').value = '';
     document.getElementById('county').selectedIndex = 0;
     document.getElementById('appraisal').value = '';
     document.getElementById('email').value = '';
@@ -627,6 +633,7 @@
           'street_address':  streetFull,
           'invite_code':     inviteCode,
           'city':            city,
+          'prop_id':         document.getElementById('prop_id').value.trim(),
           'county':          document.getElementById('county').value,
           'appraisal_value': Number(appraisal),
           'email':           email
