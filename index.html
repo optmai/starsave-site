@@ -474,7 +474,7 @@
   <!-- LEFT COPY -->
   <div class="copy">
     <h2>Is your property <em>over-appraised?</em><br>Get the evidence — and appeal it yourself.</h2>
-    <p>Most Texas tax appeal services charge <strong style="color:var(--rust)">25% to 35% of your savings</strong> and file on your behalf. We do it differently: we do the heavy lifting for you. Our <strong>data-driven Property Tax Appraisal Analysis Report</strong> is built on rigorous local market research and professional analysis — giving you solid, credible evidence to present to the appraisal district. Paired with clear step-by-step filing instructions, it's everything you need to walk in with confidence. You submit it yourself; it's straightforward and takes minutes. Our fee is a small flat rate, so <strong>you keep every dollar of your tax reduction.</strong></p>
+    <p>Most Texas tax appeal services charge <strong style="color:var(--rust)">25% to 35% of your savings</strong> and file on your behalf. We do it differently: we do the heavy lifting for you. Our <strong style="color:var(--rust)">data-driven Property Tax Appraisal Analysis Report</strong> is built on rigorous local market research and professional analysis — giving you solid, credible evidence to present to the appraisal district. Paired with clear step-by-step filing instructions, it's everything you need to walk in with confidence. </p> <p> You submit it yourself; it's straightforward and takes minutes. Our fee is a small flat rate, so <strong>you keep every dollar of your tax reduction.</strong></p>
 
     <div class="steps">
       <div class="step">
@@ -495,7 +495,7 @@
         <div class="step-num">3</div>
         <div class="step-text">
           <strong>You file — and keep 100% of the savings</strong>
-          <span>We give you a ready-to-submit appeal package. You file it yourself in minutes. No 25%–35% commission — just a small flat fee.</span>
+          <span>We give you comparable-based evidence of potential over-appraised value. You file it yourself. No 25%–35% commission — just a small flat fee.</span>
         </div>
       </div>
       <div style="margin-top:24px;background:#f0f7ff;border:2px solid #2b6cb0;border-radius:10px;padding:16px 20px;">
@@ -523,7 +523,7 @@
         </span>
       </div>
       <h3>Get Your Property Tax Appraisal Analysis Report</h3>
-      <p class="sub">Enter your property info and we'll send your Property Tax Appraisal Analysi Report and filing instructions within 1 hour.</p>
+      <p class="sub">Enter your property info and we'll send your Property Tax Appraisal Analysis Report and filing instructions within 1 hour.</p>
 
       <div class="field">
         <label for="street_full">Street Address</label>
@@ -562,7 +562,7 @@
       </div>
       <input type="text" name="_gotcha" style="display:none">
       <button class="btn" onclick="handleSubmit()">
-        <span class="star">★</span> Submit — Get My Appeal Report
+        <span class="star">★</span> Submit — Get My Analysis Report
       </button>
       <p class="privacy-note">🔒 Your information is private and never sold. Texas residents only.</p>
     </div>
@@ -610,7 +610,7 @@
     document.getElementById('form-section').style.display = 'block';
     const btn = document.querySelector('.btn');
     btn.disabled = false;
-    btn.innerHTML = '<span class="star">★</span> Submit — Get My Appeal Report';
+    btn.innerHTML = '<span class="star">★</span> Submit — Get My Analysis Report';
   }
 
   async function handleSubmit() {
@@ -662,14 +662,14 @@
         if (data.error) {
           alert(data.error);
           btn.disabled = false;
-          btn.innerHTML = '<span class="star">★</span> Submit — Get My Appeal Report';
+          btn.innerHTML = '<span class="star">★</span> Submit — Get My Analysis Report';
           return;
         }
         if (data.cached) {
           document.getElementById('cached-banner').classList.add('show');
           document.getElementById('cached-banner').scrollIntoView({behavior: 'smooth'});
           btn.disabled = false;
-          btn.innerHTML = '<span class="star">★</span> Submit — Get My Appeal Report';
+          btn.innerHTML = '<span class="star">★</span> Submit — Get My Analysis Report';
           return;
         }
         document.getElementById('form-section').style.display = 'none';
@@ -678,12 +678,12 @@
         const data = await response.json();
         alert(data?.errors?.[0]?.message || 'Submission failed. Please try again.');
         btn.disabled = false;
-        btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Appeal Report';
+        btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Analysis Report';
       }
     } catch (err) {
       alert('Network error. Please check your connection and try again.');
       btn.disabled = false;
-      btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Appeal Report';
+      btn.innerHTML = '<span class=\"star\">\u2605</span> Submit — Get My Analysis Report';
     }
   }
 </script>
