@@ -480,7 +480,7 @@
         <div class="step-num">1</div>
         <div class="step-text">
           <strong>Submit your property details</strong>
-          <span>Takes less than 1 minute — just your address and appraisal value.</span>
+          <span>Takes less than 1 minute — just your address and email.</span>
         </div>
       </div>
       <div class="step">
@@ -546,10 +546,6 @@
       </div>
 
       <div class="field">
-        <label for="appraisal">Appraisal District Value ($)</label>
-        <input type="number" id="appraisal" placeholder="e.g. 385000" min="0" />
-      </div>
-
       <div class="field">
         <label for="email">Your Email Address</label>
         <input type="email" id="email" placeholder="you@example.com" />
@@ -603,7 +599,6 @@
     document.getElementById('city').value = '';
     document.getElementById('prop_id').value = '';
     document.getElementById('county').selectedIndex = 0;
-    document.getElementById('appraisal').value = '';
     document.getElementById('email').value = '';
     document.getElementById('success-section').style.display = 'none';
     document.getElementById('form-section').style.display = 'block';
@@ -620,10 +615,9 @@
       return;
     }
     const city       = document.getElementById('city').value.trim();
-    const appraisal  = document.getElementById('appraisal').value.trim();
     const email      = document.getElementById('email').value.trim();
 
-    if (!streetFull || !city || !appraisal || !email || !inviteCode) {
+    if (!streetFull || !city || !email || !inviteCode) {
       alert('Please fill in all fields before submitting.');
       return;
     }
@@ -632,11 +626,6 @@
       alert('Please enter a valid email address.');
       return;
     }
-    if (isNaN(appraisal) || Number(appraisal) <= 0) {
-      alert('Please enter a valid appraisal value.');
-      return;
-    }
-
     const btn = document.querySelector('.btn');
     btn.disabled = true;
     btn.innerHTML = 'Submitting…';
@@ -651,7 +640,6 @@
           'city':            city,
           'prop_id':         document.getElementById('prop_id').value.trim(),
           'county':          document.getElementById('county').value,
-          'appraisal_value': Number(appraisal),
           'email':           email
         })
       });
@@ -781,11 +769,11 @@
       <h2 style="color:#1a2742;border-bottom:2px solid #c9933a;padding-bottom:12px;margin:0 0 20px;">Privacy Policy</h2>
       <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
         <strong>1. Information We Collect</strong><br>
-        We collect only the information you provide when submitting a request: your property address, appraisal value, and email address. We do not collect any other personal information.
+        We collect only the information you provide when submitting a request: your property address and email address. We do not collect any other personal information.
       </p>
       <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
         <strong>2. How We Use Your Information</strong><br>
-        Your email address is used solely to deliver your property tax appraisal analysis report. Your property address and appraisal value are used to generate the report. We do not sell, share, or rent your information to any third parties.
+        Your email address is used solely to deliver your property tax analysis report. Your property address is used to generate the report. We do not sell, share, or rent your information to any third parties.
       </p>
       <p style="color:#4b5563;line-height:1.7;font-size:0.95rem;">
         <strong>3. Data Storage</strong><br>
