@@ -594,6 +594,7 @@
 
       <!-- STEP 2: Harris County Form -->
       <div id="harris-form" style="display:none;">
+        <div id="harris-error" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:8px;padding:12px 16px;margin-bottom:16px;color:#c53030;font-size:0.92rem;line-height:1.6;"></div>
         <div style="display:flex;align-items:center;gap:10px;margin:16px 0 20px;">
           <button onclick="backToCounty()" style="background:none;border:none;cursor:pointer;color:var(--rust);font-size:0.9rem;font-weight:600;padding:0;">← Change County</button>
           <span style="color:var(--mid);font-size:0.9rem;">Harris County — Houston area</span>
@@ -632,7 +633,7 @@
       <h3>Thank You!</h3>
       <p>
         We received your request and are currently working on it.
-        Please expect your <span class="hl">Property Tax Analysis Report</span> in your email within <span class="hl">1 hour</span>.
+        Please expect your <span class="hl">Property Tax Analysis Report</span> in your email within <span class="hl" id="report-timing">1 hour</span>.
       </p>
       <p style="margin-top:14px;">📬 Please check your <strong>inbox and spam/junk folder</strong>. If you find it in spam, mark it as <strong>"Not Spam"</strong> to ensure future emails reach you directly.</p>
       <p style="margin-top:14px;">💬 Questions? Contact us at <a href="mailto:support@lonestartaxsave.com" style="color:var(--rust);font-weight:600;">support@lonestartaxsave.com</a></p>
@@ -731,6 +732,12 @@
     btn.disabled = true;
     btn.innerHTML = 'Submitting…';
 
+    // Clear any previous inline error
+    if (!isBrazos) {
+      const errDiv = document.getElementById('harris-error');
+      if (errDiv) { errDiv.style.display = 'none'; errDiv.textContent = ''; }
+    }
+
     const body = {
       street_address: street,
       invite_code:    inviteCode,
@@ -750,7 +757,15 @@
       if (response.ok) {
         const data = await response.json();
         if (data.error) {
-          alert(data.error);
+          if (!isBrazos) {
+            // Harris: show inline error
+            const errDiv = document.getElementById('harris-error');
+            errDiv.textContent = data.error;
+            errDiv.style.display = 'block';
+            errDiv.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+          } else {
+            alert(data.error);
+          }
           btn.disabled = false;
           btn.innerHTML = '<span class="star">★</span> Submit — Get My Analysis Report';
           return;
@@ -764,6 +779,9 @@
         }
         document.getElementById('form-section').style.display    = 'none';
         document.getElementById('success-section').style.display = 'block';
+        // Update timing message based on county
+        const timing = document.getElementById('report-timing');
+        if (timing) timing.textContent = isBrazos ? '1 hour' : 'minutes';
       } else {
         const data = await response.json();
         alert(data?.errors?.[0]?.message || 'Submission failed. Please try again.');
