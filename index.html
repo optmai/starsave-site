@@ -486,7 +486,7 @@
 
 <div class="value-strip">
   <p>Property Tax Analysis Report</p>
-  <p>Fast Response</p>
+  <p>Fast 1-Hour Response</p>
 </div>
 
 <main>
@@ -657,6 +657,16 @@
       id_placeholder: 'e.g. 00000123456789 — found on your DCAD notice',
       id_field:    'acct',
       city_hint:   'e.g. Dallas',
+      timing:      'minutes',
+    },
+    {
+      name:        'Collin County',
+      description: 'Plano / Frisco / McKinney area',
+      api:         'https://collin-api.lonestartaxsave.com/submit',
+      id_label:    'Account Number',
+      id_placeholder: 'e.g. 2761347 — found on your CCAD notice',
+      id_field:    'acct',
+      city_hint:   'e.g. Plano',
       timing:      'minutes',
     },
   ];
