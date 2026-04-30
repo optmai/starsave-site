@@ -2,11 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://lonestartaxsave.com/harris-county-property-tax-guides.html</loc>
+    <loc>https://lonestartaxsave.com/harris_county_property_tax_guides.html</loc>
   </url>
 
   <url>
-    <loc>https://lonestartaxsave.com/brazos-county-property-tax-guides.html</loc>
+    <loc>https://lonestartaxsave.com/brazos_county_property_tax_guides.html</loc>
+  </url>
+
+    <url>
+    <loc>https://lonestartaxsave.com/dallas_county_property_tax_guides.html</loc>
   </url>
 
 </urlset>
