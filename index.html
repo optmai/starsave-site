@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; }
 
     :root {
       --tan:    #f5efe4;
@@ -135,6 +136,7 @@
     }
     @media (max-width: 700px) {
       main { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px 60px; }
+      .copy h2 { font-size: clamp(1.4rem, 7vw, 2rem); }
     }
 
     /* ── LEFT COPY ──────────────────────────────── */
