@@ -551,19 +551,27 @@
       <h3>Get Your Property Tax Analysis Report</h3>
       <p class="sub">Select your county to get started.</p>
 
-      <!-- STEP 1: County Search & Select -->
+
+      <!-- STEP 1: County Tabs + Zip Lookup -->
       <div id="county-step">
-        <div style="position:relative;margin-top:16px;">
-          <input type="text" id="county-search" placeholder="🔍 Search your county (e.g. Harris, Dallas...)"
-            oninput="filterCounties(this.value)"
-            style="width:100%;padding:14px 16px;border:1.5px solid #ddd4c2;border-radius:8px;
-                   font-size:1rem;color:#1a2742;box-sizing:border-box;"/>
+
+        <!-- County tabs -->
+        <div id="county-list" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;"></div>
+
+        <!-- Zip code lookup -->
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid #ddd4c2;">
+          <p style="font-size:0.88rem;color:var(--mid);margin-bottom:10px;text-align:center;">
+            Not sure which county? Type your zip code:
+          </p>
+          <input type="text" id="zip-input" placeholder="e.g. 77401" maxlength="5"
+            oninput="handleZipInput(this.value)"
+            style="width:100%;padding:12px 16px;border:1.5px solid #ddd4c2;border-radius:8px;
+                   font-size:1.1rem;color:#1a2742;box-sizing:border-box;letter-spacing:0.1em;text-align:center;"/>
+          <p id="zip-result" style="display:none;margin-top:10px;font-size:0.92rem;font-weight:600;color:#1a2742;text-align:center;"></p>
         </div>
-        <div id="county-list" style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;max-height:320px;overflow-y:auto;">
-          <!-- populated by JS -->
-        </div>
-        <p id="county-none" style="display:none;color:var(--mid);font-size:0.9rem;margin-top:12px;text-align:center;">
-          No matching county found. We're expanding — contact us at support@lonestartaxsave.com.
+
+        <p id="county-none" style="display:none;color:var(--mid);font-size:0.9rem;margin-top:12px;text-align:center;line-height:1.6;">
+          We're not currently serving this county.<br>We're expanding — stay tuned!
         </p>
       </div>
 
@@ -699,31 +707,41 @@
 
   let selectedCounty = null;
 
-  // ── BUILD COUNTY LIST ──────────────────────────────────────────────────────
-  function buildCountyList(filter = '') {
-    const list    = document.getElementById('county-list');
-    const noMatch = document.getElementById('county-none');
-    const filtered = COUNTIES.filter(c =>
-      c.name.toLowerCase().includes(filter.toLowerCase()) ||
-      c.description.toLowerCase().includes(filter.toLowerCase())
-    );
+  // ── ZIP → COUNTY MAPPING ──────────────────────────────────────────────────
+  const ZIP_TO_COUNTY = {"75001":"Dallas","75002":"Collin","75006":"Dallas","75007":"Dallas","75009":"Collin","75010":"Dallas","75011":"Dallas","75013":"Collin","75014":"Dallas","75019":"Dallas","75022":"Dallas","75023":"Collin","75024":"Collin","75025":"Collin","75028":"Dallas","75030":"Dallas","75032":"Dallas","75033":"Collin","75034":"Collin","75035":"Collin","75036":"Dallas","75038":"Dallas","75039":"Dallas","75040":"Dallas","75041":"Dallas","75042":"Dallas","75043":"Dallas","75044":"Collin","75048":"Collin","75050":"Dallas","75051":"Dallas","75052":"Dallas","75053":"Dallas","75054":"Dallas","75056":"Dallas","75057":"Dallas","75060":"Dallas","75061":"Dallas","75062":"Dallas","75063":"Dallas","75065":"Dallas","75067":"Dallas","75068":"Dallas","75069":"Collin","75070":"Collin","75071":"Collin","75072":"Collin","75074":"Collin","75075":"Collin","75077":"Dallas","75078":"Collin","75080":"Collin","75081":"Dallas","75082":"Collin","75085":"Dallas","75087":"Collin","75088":"Dallas","75089":"Dallas","75093":"Collin","75094":"Collin","75097":"Collin","75098":"Collin","75104":"Dallas","75106":"Dallas","75114":"Dallas","75115":"Dallas","75116":"Dallas","75123":"Dallas","75125":"Dallas","75126":"Dallas","75132":"Dallas","75134":"Dallas","75135":"Dallas","75137":"Dallas","75138":"Dallas","75141":"Dallas","75142":"Dallas","75143":"Dallas","75146":"Dallas","75149":"Dallas","75150":"Dallas","75154":"Dallas","75158":"Dallas","75159":"Dallas","75164":"Collin","75165":"Dallas","75166":"Collin","75167":"Dallas","75168":"Dallas","75172":"Dallas","75173":"Collin","75180":"Dallas","75181":"Dallas","75182":"Dallas","75185":"Dallas","75187":"Dallas","75189":"Collin","75201":"Dallas","75202":"Dallas","75203":"Dallas","75204":"Dallas","75205":"Dallas","75206":"Dallas","75207":"Dallas","75208":"Dallas","75209":"Dallas","75210":"Dallas","75211":"Dallas","75212":"Dallas","75214":"Dallas","75215":"Dallas","75216":"Dallas","75217":"Dallas","75218":"Dallas","75219":"Dallas","75220":"Dallas","75221":"Dallas","75222":"Dallas","75223":"Dallas","75224":"Dallas","75225":"Dallas","75226":"Dallas","75227":"Dallas","75228":"Dallas","75229":"Dallas","75230":"Dallas","75231":"Dallas","75232":"Dallas","75233":"Dallas","75234":"Dallas","75235":"Dallas","75236":"Dallas","75237":"Dallas","75238":"Dallas","75240":"Dallas","75241":"Dallas","75243":"Dallas","75244":"Dallas","75246":"Dallas","75247":"Dallas","75248":"Collin","75249":"Dallas","75252":"Collin","75253":"Dallas","75254":"Dallas","75287":"Collin","75313":"Dallas","75360":"Dallas","75367":"Dallas","75372":"Dallas","75374":"Dallas","75389":"Dallas","75407":"Collin","75409":"Collin","75424":"Collin","75433":"Dallas","75442":"Collin","75452":"Collin","75454":"Collin","75455":"Dallas","75491":"Collin","75495":"Collin","76002":"Dallas","76005":"Dallas","76006":"Dallas","76011":"Dallas","76013":"Dallas","76014":"Dallas","76016":"Dallas","76018":"Dallas","76034":"Dallas","76039":"Dallas","76040":"Dallas","76051":"Dallas","76054":"Dallas","76063":"Dallas","76065":"Dallas","76078":"Dallas","76084":"Dallas","76092":"Dallas","76102":"Dallas","76104":"Dallas","76107":"Dallas","76108":"Dallas","76110":"Dallas","76112":"Dallas","76117":"Dallas","76119":"Dallas","76126":"Dallas","76131":"Dallas","76135":"Dallas","76137":"Dallas","76177":"Dallas","76180":"Dallas","76182":"Dallas","76205":"Dallas","76209":"Dallas","76210":"Dallas","76226":"Dallas","76227":"Dallas","76244":"Dallas","76248":"Dallas","76262":"Dallas","77002":"Harris","77004":"Harris","77005":"Harris","77009":"Harris","77011":"Harris","77012":"Harris","77013":"Harris","77014":"Harris","77015":"Harris","77016":"Harris","77017":"Harris","77018":"Harris","77019":"Harris","77020":"Harris","77021":"Harris","77022":"Harris","77023":"Harris","77024":"Harris","77025":"Harris","77026":"Harris","77028":"Harris","77029":"Harris","77030":"Harris","77031":"Harris","77032":"Harris","77033":"Harris","77034":"Harris","77035":"Harris","77036":"Harris","77037":"Harris","77038":"Harris","77039":"Harris","77041":"Harris","77042":"Harris","77044":"Harris","77045":"Harris","77047":"Harris","77048":"Harris","77049":"Harris","77050":"Harris","77051":"Harris","77053":"Harris","77054":"Harris","77056":"Harris","77058":"Harris","77059":"Harris","77060":"Harris","77061":"Harris","77062":"Harris","77063":"Harris","77065":"Harris","77066":"Harris","77067":"Harris","77068":"Harris","77069":"Harris","77070":"Harris","77071":"Harris","77072":"Harris","77073":"Harris","77074":"Harris","77075":"Harris","77076":"Harris","77077":"Harris","77078":"Harris","77079":"Harris","77080":"Harris","77081":"Harris","77083":"Harris","77085":"Harris","77086":"Harris","77087":"Harris","77089":"Harris","77090":"Harris","77091":"Harris","77092":"Harris","77093":"Harris","77095":"Harris","77096":"Harris","77098":"Harris","77099":"Harris","77251":"Harris","77336":"Harris","77338":"Harris","77339":"Harris","77345":"Harris","77346":"Harris","77357":"Harris","77365":"Harris","77373":"Harris","77375":"Harris","77377":"Harris","77388":"Harris","77396":"Harris","77401":"Harris","77429":"Harris","77433":"Harris","77443":"Harris","77447":"Harris","77449":"Harris","77450":"Harris","77477":"Harris","77484":"Harris","77489":"Harris","77493":"Harris","77498":"Harris","77501":"Harris","77502":"Harris","77503":"Harris","77504":"Harris","77505":"Harris","77506":"Harris","77520":"Harris","77521":"Harris","77523":"Harris","77530":"Harris","77532":"Harris","77535":"Harris","77536":"Harris","77546":"Harris","77547":"Harris","77562":"Harris","77571":"Harris","77573":"Harris","77581":"Harris","77586":"Harris","77587":"Harris","77598":"Harris","77801":"Brazos","77802":"Brazos","77803":"Brazos","77805":"Brazos","77806":"Brazos","77807":"Brazos","77808":"Brazos","77840":"Brazos","77841":"Brazos","77842":"Brazos","77843":"Brazos","77844":"Brazos","77845":"Brazos","77859":"Brazos","77868":"Brazos","77873":"Brazos","77879":"Brazos"};
+
+  // ── BUILD COUNTY TABS ──────────────────────────────────────────────────────
+  function buildCountyList() {
+    const list = document.getElementById('county-list');
     list.innerHTML = '';
-    if (filtered.length === 0) {
-      noMatch.style.display = 'block';
-      return;
-    }
-    noMatch.style.display = 'none';
-    filtered.forEach(c => {
+    COUNTIES.forEach(c => {
       const btn = document.createElement('button');
       btn.className = 'county-btn';
-      btn.innerHTML = `<strong>${c.name}</strong><span>${c.description}</span>`;
+      btn.innerHTML = `<span style="font-weight:700;color:var(--navy);">${c.name}</span><span>${c.description}</span>`;
       btn.onclick = () => selectCounty(c);
       list.appendChild(btn);
     });
   }
 
-  function filterCounties(val) {
-    buildCountyList(val);
+  // ── ZIP LOOKUP ─────────────────────────────────────────────────────────────
+  function handleZipInput(val) {
+    const zip     = val.trim();
+    const result  = document.getElementById('zip-result');
+    const noMatch = document.getElementById('county-none');
+    result.style.display  = 'none';
+    noMatch.style.display = 'none';
+    if (zip.length < 5) return;
+    const countyName = ZIP_TO_COUNTY[zip];
+    if (countyName) {
+      const county = COUNTIES.find(c => c.name === countyName);
+      if (county) {
+        result.style.display = 'block';
+        result.innerHTML = `✅ Zip <strong>${zip}</strong> → <span style="color:var(--rust);">${countyName} County</span>. Loading your form...`;
+        setTimeout(() => selectCounty(county), 600);
+      }
+    } else {
+      noMatch.style.display = 'block';
+    }
   }
 
   // ── SELECT COUNTY ──────────────────────────────────────────────────────────
@@ -731,12 +749,11 @@
     selectedCounty = county;
     document.getElementById('county-step').style.display  = 'none';
     document.getElementById('county-form').style.display  = 'block';
-    document.getElementById('county-label').textContent   = `${county.name} — ${county.description}`;
+    document.getElementById('county-label').textContent   = `${county.name} County — ${county.description}`;
     document.getElementById('f_city').placeholder         = county.city_hint;
     document.getElementById('f_id_label').innerHTML       =
       `${county.id_label} <span style="color:#6b7280;font-weight:400;font-size:0.85rem;">(Optional)</span>`;
     document.getElementById('f_id').placeholder           = county.id_placeholder;
-    // Clear form
     ['f_street','f_id','f_city','f_email','f_invite'].forEach(id => {
       document.getElementById(id).value = '';
     });
@@ -752,8 +769,11 @@
     selectedCounty = null;
     document.getElementById('county-step').style.display = 'block';
     document.getElementById('county-form').style.display = 'none';
-    document.getElementById('county-search').value       = '';
-    buildCountyList();
+    if (document.getElementById('zip-input')) {
+      document.getElementById('zip-input').value = '';
+      document.getElementById('zip-result').style.display = 'none';
+    }
+    document.getElementById('county-none').style.display = 'none';
   }
 
   function resetForm() {
